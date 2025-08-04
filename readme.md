@@ -2,6 +2,10 @@
 
 > Solana Wallet Adapter for the Trashpack browser extension — compatible with `@solana/wallet-adapter` ecosystem.
 
+[![npm version](https://img.shields.io/npm/v/trashpack-wallet-adapter.svg)](https://www.npmjs.com/package/trashpack-wallet-adapter)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ---
 
 ## 🚀 Overview
@@ -10,127 +14,144 @@
 
 This adapter detects the Trashpack wallet (injected into `window.trashpack` or `window.solana`), handles connection, transaction signing, message signing, and more — just like Phantom or Solflare.
 
----
-
 ## 📦 Installation
 
 ```bash
 npm install trashpack-wallet-adapter
+```
+
 Or with Yarn:
 
-bash
-Copy
-Edit
+```bash
 yarn add trashpack-wallet-adapter
-🔧 Usage
-ts
-Copy
-Edit
+```
+
+## 🔧 Usage
+
+```typescript
+
+import React, { useMemo } from 'react';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import {
+    PhantomWalletAdapter,
+    SolflareWalletAdapter,
+    TorusWalletAdapter,
+    CoinbaseWalletAdapter,
+    LedgerWalletAdapter
+
+} from '@solana/wallet-adapter-wallets';
+import { clusterApiUrl } from '@solana/web3.js';
+// trashpack
 import { TrashpackWalletAdapter } from 'trashpack-wallet-adapter';
+import '@solana/wallet-adapter-react-ui/styles.css';
+https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters
+export const WalletConnectionProvider = ({ children }: { children: React.ReactNode }) => {
+    const endpoint = useMemo(() => clusterApiUrl('devnet'), []);
 
-const adapter = new TrashpackWalletAdapter();
+    const wallets = useMemo(
+        () => [
+            new PhantomWalletAdapter(),
+            new SolflareWalletAdapter(),
+            new TorusWalletAdapter(),
+            new CoinbaseWalletAdapter(),
+            new LedgerWalletAdapter(),
+            new TrashpackWalletAdapter()
+        ],
+        []
+    );
 
-await adapter.connect();
-const publicKey = adapter.publicKey;
+    return (
+        <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider wallets={wallets} autoConnect>
+                <WalletModalProvider>{children}</WalletModalProvider>
+            </WalletProvider>
+        </ConnectionProvider>
+    );
+};
 
-const signature = await adapter.sendTransaction(transaction, connection);
-🧠 Adapter Detection
+```
+
+## 🧠 Adapter Detection
+
 The adapter detects your wallet automatically via:
 
-ts
-Copy
-Edit
+```typescript
 window.trashpack?.isTrashPack || window.solana?.isTrashPack
+```
+
 Ensure your browser extension exposes this object properly.
 
-📋 API Reference
-This adapter extends:
+## 📋 API Reference
 
-ts
-Copy
-Edit
-BaseMessageSignerWalletAdapter
-So it supports all standard methods like:
+This adapter extends `BaseMessageSignerWalletAdapter`, so it supports all standard methods like:
 
-connect()
-
-disconnect()
-
-signTransaction()
-
-signAllTransactions()
-
-signMessage()
-
-sendTransaction()
+- `connect()`
+- `disconnect()`
+- `signTransaction()`
+- `signAllTransactions()`
+- `signMessage()`
+- `sendTransaction()`
 
 It also emits events such as:
 
-connect(publicKey)
+- `connect(publicKey)`
+- `disconnect()`
+- `readyStateChange(WalletReadyState)`
+- `error(error)`
 
-disconnect()
+## 🧩 Supported Transaction Versions
 
-readyStateChange(WalletReadyState)
-
-error(error)
-
-🧩 Supported Transaction Versions
-ts
-Copy
-Edit
+```typescript
 supportedTransactionVersions = new Set(['legacy', 0]);
-🌐 Wallet Details
-Field	Value
-name	"TrashPack"
-url	https://trashpack.tech
-icon	Custom base64 SVG
+```
 
-🛠️ Development
+## 🌐 Wallet Details
+
+| Field | Value |
+|-------|-------|
+| name | "TrashPack" |
+| url | https://trashpack.tech |
+| icon | Custom base64 SVG |
+
+## 🛠️ Development
+
 To build the adapter:
 
-bash
-Copy
-Edit
+```bash
 npm install
 npm run build
-This compiles src/index.ts into dist/.
+```
 
-🔒 Requirements
-@solana/web3.js
+This compiles `src/index.ts` into `dist/`.
 
-@solana/wallet-adapter-base
+## 🔒 Requirements
 
-📜 License
-MIT License © [Your Name]
+- `@solana/web3.js`
+- `@solana/wallet-adapter-base`
 
-🤝 Contributing
-Feel free to open issues or submit PRs for improvements and fixes.
+## 🧪 Test Your Wallet
 
-🧪 Test Your Wallet
 To test that your Trashpack wallet is injected and working:
 
-js
-Copy
-Edit
+```javascript
 if (window.trashpack?.isTrashPack || window.solana?.isTrashPack) {
     console.log('Trashpack wallet detected ✅');
 }
-📣 Note
+```
+
+## 📣 Note
+
 This adapter does not provide the browser extension itself. It assumes that your extension is installed and properly injects the trashpack object into the window.
 
-yaml
-Copy
-Edit
+## 🤝 Contributing
+
+Feel free to open issues or submit PRs for improvements and fixes.
+
+## 📜 License
+
+MIT License © [Your Name]
 
 ---
 
-You can save this directly into a file named `README.md` at the root of your project. Let me know if you want a matching `LICENSE` file or `CONTRIBUTING.md` too.
-
-
-
-
-
-
-
-
-Ask ChatGPT
+**GitHub Repository**: [https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters](https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters)
