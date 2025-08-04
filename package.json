@@ -1,14 +1,22 @@
 {
   "name": "trashpack-wallet-adapter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Solana wallet adapter for Trashpack extension",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters.git"
+  },
+  "homepage": "https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters#readme",
+  "bugs": {
+    "url": "https://github.com/amitpatel-wstf/TrashPack-Wallet-Adapters/issues"
+  },
   "scripts": {
     "build": "tsc"
   },
   "keywords": ["solana", "wallet", "adapter", "trashpack", "web3"],
-  "author": "Your Name",
+  "author": "Amit Patel",
   "license": "MIT",
   "dependencies": {
     "@solana/web3.js": "^1.92.1",
