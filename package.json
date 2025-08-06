@@ -1,6 +1,6 @@
 {
   "name": "trashpack-wallet-adapter",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "Solana wallet adapter for Trashpack extension",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
